@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eldohub Academy Slideshow</title>
+<style>
+    .slideshow-container {
+  max-width: 800px;
+  position: relative;
+  margin: auto;
+}
+
+.slide {
+  display: none;
+  /* Additional styles for image and content can be added here */
+}
+
+.slide img {
+  width: 100%;
+  height: auto;
+}
+
+.slide p {
+  position: absolute;
+  bottom: 20px;
+  left: 15px;
+  color: white;
+  text-shadow: 1px 1px 2px black;
+}
+
+.slideshow-container .slide:first-child {
+  display: block;
+}
+
+/* Optional: Styles for navigation buttons */
+
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  
+}
+
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+.slideshow-container.showControls .prev,
+.slideshow-container.showControls .next {
+  display: block;
+}
+
+</style>  
+<body>
+  <div class="slideshow-container">
+    <div class="slide">
+      <img src="WhatsApp Image 2024-04-03 at 7.36.01 PM (1).jpeg" alt="Image 1">
+      <p>Description for Image 1</p>
+    </div>
+    <div class="slide">
+      <img src="WhatsApp Image 2024-04-03 at 7.36.01 PM.jpeg" alt="Image 2">
+      <p>Description for Image 2</p>
+    </div>
+    <div class="slide">
+      <img src="WhatsApp Image 2024-04-03 at 7.36.01 PM.jpeg" alt="Image 3">
+      <p>Description for Image 3</p>
+    </div>
+    <div class="slide">
+      <img src="WhatsApp Image 2024-04-03 at 7.36.03 PM.jpeg" alt="Image 4">
+      <p>Description for Image 4</p>
+    </div>
+  </div>
+
+  <button class="prev">&#10094;</button>
+  <button class="next">&#10095;</button>
+
+  <script>
+const slideshowContainer = document.querySelector('.slideshow-container');
+const slides = document.querySelectorAll('.slide');
+const prevButton = document.querySelector('.prev');
+const nextButton = document.querySelector('.next');
+
+let currentSlide = 0;
+let slideInterval;
+
+function showSlide(n) {
+  slides.forEach((slide, index) => {
+    slide.style.display = index === n? 'block' : 'none';
+  });
+
+  currentSlide = n;
+  updateNavigationButtons();
+}
+
+function updateNavigationButtons() {
+  prevButton.disabled = currentSlide === 0;
+  nextButton.disabled = currentSlide === slides.length - 1;
+}
+
+function nextSlide() {
+  showSlide((currentSlide + 1) % slides.length);
+}
+
+function prevSlide() {
+  showSlide((currentSlide - 1 + slides.length) % slides.length);
+}
+
+// Initialize the slideshow
+showSlide(currentSlide);
+
+// Add event listeners to the navigation buttons
+prevButton.addEventListener('click', prevSlide);
+nextButton.addEventListener('click', nextSlide);
+
+// Start the slide interval
+slideInterval = setInterval(nextSlide, 2000);
+
+// Stop the slide interval on mouseover
+slideshowContainer.addEventListener('mouseover', () => {
+  clearInterval(slideInterval);
+});
+
+// Restart the slide interval on mouseout
+slideshowContainer.addEventListener('mouseout', () => {
+  slideInterval = setInterval(nextSlide, 2000);
+});
+  </script> 
+  
+</body>
+</html>
